@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MiniHelp Astana</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f7f7fb;color:#17171c}
+  .wrap{max-width:980px;margin:auto;padding:28px 18px 50px}
+  header{display:flex;justify-content:space-between;align-items:center;padding:8px 0 30px}
+  .logo{font-weight:800;font-size:22px}
+  .badge{background:#fff0c2;padding:8px 12px;border-radius:999px;font-size:13px}
+  .hero{background:#17171c;color:white;border-radius:28px;padding:42px 28px;margin-bottom:20px}
+  h1{font-size:clamp(36px,8vw,68px);line-height:.95;margin:0 0 18px;letter-spacing:-2px}
+  .hero p{font-size:18px;line-height:1.5;max-width:650px;color:#d9d9df}
+  .btn{display:inline-block;background:#ffd84d;color:#17171c;text-decoration:none;font-weight:800;padding:14px 20px;border-radius:14px;margin-top:8px}
+  h2{font-size:28px;margin:34px 0 16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .card{background:white;border:1px solid #e7e7ed;border-radius:20px;padding:20px}
+  .emoji{font-size:30px}
+  .card h3{margin:10px 0 6px}
+  .card p{margin:0;color:#666;line-height:1.45}
+  .price{margin-top:14px;font-weight:800}
+  .form{background:white;border-radius:22px;padding:22px;border:1px solid #e7e7ed}
+  label{display:block;font-weight:700;margin:14px 0 7px}
+  input,select,textarea{width:100%;padding:13px;border:1px solid #d9d9e1;border-radius:12px;font:inherit}
+  textarea{min-height:100px;resize:vertical}
+  button{border:0;background:#17171c;color:white;padding:14px 20px;border-radius:13px;font-weight:800;font-size:16px;margin-top:15px;cursor:pointer}
+  .note{font-size:13px;color:#777;line-height:1.45;margin-top:12px}
+  footer{text-align:center;color:#888;font-size:13px;margin-top:28px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo">MiniHelp ✦ Astana</div>
+  <div class="badge">быстро • просто • локально</div>
+</header>
+
+<section class="hero">
+  <h1>Маленькие дела.<br>Большая помощь.</h1>
+  <p>Нужно забрать небольшой заказ, красиво упаковать подарок или помочь с простой задачей? Оставьте заявку — мы обсудим, можем ли помочь.</p>
+  <a class="btn" href="#order">Оставить заявку →</a>
+</section>
+
+<h2>Что можно заказать</h2>
+<div class="grid">
+  <div class="card"><div class="emoji">🎁</div><h3>Упаковка подарка</h3><p>Поможем красиво оформить небольшой подарок.</p><div class="price">от 1 000 ₸</div></div>
+  <div class="card"><div class="emoji">📸</div><h3>Фото товара</h3><p>Сделаем простые фото на телефон для объявления или сторис.</p><div class="price">от 1 500 ₸</div></div>
+  <div class="card"><div class="emoji">📝</div><h3>Маленькое поручение</h3><p>Простая задача в публичном месте — по договорённости.</p><div class="price">от 1 500 ₸</div></div>
+  <div class="card"><div class="emoji">🎀</div><h3>Помощь с подготовкой</h3><p>Разложить, подписать или упаковать небольшие вещи.</p><div class="price">от 1 000 ₸</div></div>
+</div>
+
+<h2 id="order">Оставить заявку</h2>
+<form class="form" id="form">
+  <label for="service">Что нужно?</label>
+  <select id="service" required>
+    <option value="">Выберите услугу</option>
+    <option>Упаковка подарка</option>
+    <option>Фото товара</option>
+    <option>Маленькое поручение</option>
+    <option>Помощь с подготовкой</option>
+    <option>Другое</option>
+  </select>
+
+  <label for="details">Опишите задачу</label>
+  <textarea id="details" placeholder="Например: нужно красиво упаковать небольшой подарок..." required></textarea>
+
+  <label for="contact">Как с вами связаться?</label>
+  <input id="contact" placeholder="Telegram / WhatsApp" required>
+
+  <button type="submit">Отправить заявку</button>
+  <div class="note">Важно: для безопасности принимаются только безопасные поручения в публичных местах и с согласованием со взрослыми. Сайт пока демонстрационный: заявки сохраняются только на этом устройстве.</div>
+</form>
+
+<footer>MiniHelp Astana • первая версия проекта</footer>
+</div>
+
+<script>
+document.getElementById('form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const service = document.getElementById('service').value;
+  const details = document.getElementById('details').value;
+  const contact = document.getElementById('contact').value;
+  const old = JSON.parse(localStorage.getItem('minihelp_requests') || '[]');
+  old.push({service, details, contact, date:new Date().toLocaleString('ru-RU')});
+  localStorage.setItem('minihelp_requests', JSON.stringify(old));
+  alert('Заявка сохранена! 💛 Мы свяжемся с вами после проверки.');
+  this.reset();
+});
+</script>
+</body>
+</html>
